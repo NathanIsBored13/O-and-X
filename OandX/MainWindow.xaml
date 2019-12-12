@@ -1,0 +1,14 @@
+﻿<Window x:Class="OandX.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OandX"
+        mc:Ignorable="d"
+        Title="Noughts and Crosses" 
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize"
+        Background="Gray">
+    <UniformGrid x:Name="Game_Board" Margin="10" >
+    </UniformGrid>
+</Window>
