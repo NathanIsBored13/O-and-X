@@ -8,7 +8,36 @@
         Title="Noughts and Crosses" 
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"
-        Background="Gray">
-    <UniformGrid x:Name="Game_Board" Margin="10" >
-    </UniformGrid>
+        Background="Gray"
+        PreviewKeyDown="Window_PreviewKeyDown">
+    <StackPanel Orientation="Horizontal" Margin="5">
+        <Border CornerRadius="4" BorderBrush="LightGray" Background="DarkGray" BorderThickness="2">
+            <UniformGrid x:Name="Game_Board" Style="{StaticResource UnifrormGrid_Style}">
+                <Button />
+                <Button />
+                <Button />
+                <Button />
+            </UniformGrid>
+        </Border>
+        <Border Margin="2, 0, 0, 0" CornerRadius="4" BorderBrush="LightGray" BorderThickness="2, 2, 2, 2">
+            <StackPanel MinWidth="75">
+                <Label Foreground="White" FontWeight="Bold" Content="Noughts and Crosses!" HorizontalAlignment="Center" />
+                <Grid Style="{StaticResource Grid_Style}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Turn Counter:" />
+                    <Label Grid.Row="0" Grid.Column="1" Content="" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="Player:" />
+                    <Label Grid.Row="1" Grid.Column="1" Content="" />
+                </Grid>
+            </StackPanel>
+        </Border>
+    </StackPanel>
 </Window>

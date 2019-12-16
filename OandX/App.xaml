@@ -4,6 +4,42 @@
              xmlns:local="clr-namespace:OandX"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ControlTemplate x:Key="Button_Template" TargetType="Button">
+            <Border Name="border" Padding="10" BorderThickness="4" BorderBrush="LightGray" CornerRadius="4" Background="{TemplateBinding Background}">
+                <Viewbox>
+                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Name="content"/>
+                </Viewbox>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="violet" />
+                    <Setter TargetName="border" Property="BorderBrush" Value="LightCyan" />
+                    <Setter TargetName="border" Property="BorderThickness" Value="5" />
+                </Trigger>
+                <Trigger Property="Button.IsFocused" Value="True" >
+                    <Setter TargetName="border" Property="BorderBrush" Value="LightCyan" />
+                    <Setter TargetName="border" Property="BorderThickness" Value="5" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <Style x:Key="UnifrormGrid_Style" TargetType="UniformGrid">
+            <Setter Property="Margin" Value="0" />
+            <Style.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="MinWidth" Value="100" />
+                    <Setter Property="MinHeight" Value="100" />
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Foreground" Value="Purple" />
+                    <Setter Property="Template" Value="{StaticResource Button_Template}"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style x:Key="Grid_Style" TargetType="Grid">
+            <Style.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Foreground" Value="White" />
+                </Style>
+            </Style.Resources>
+        </Style>
     </Application.Resources>
 </Application>
