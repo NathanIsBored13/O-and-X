@@ -1,40 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OandX
 {
     class Board
     {
-        private int size;
         private Token[,] board_state;
-        public Board(int size)
+        private int size;
+        public Board(int size, Token[,] board_state = null)
         {
             this.size = size;
-            board_state = new Token[size, size];
+            if (board_state == null) this.board_state = new Token[size, size];
+            else this.board_state = Copy(board_state);
         }
-        public Board(int size, Token[,] board_state)
+        private Token[,] Copy(Token[,] values)
         {
-            this.size = size;
-            this.board_state = board_state;
-        }
-        public Board Move(int[] point, Token state)
-        {
-            Board ret = new Board(size, board_state);
-            ret.SetState(point, state);
+            Token[,] ret = new Token[size, size];
+            for (int x = 0; x < size; x++)
+                for (int y = 0; y < size; y++)
+                    ret[x, y] = values[x, y];
             return ret;
         }
-        public void SetState(int[] point, Token state) => board_state[point[0], point[1]] = state;
+        public void Move(int[] point, Token state)
+        {
+            board_state[point[0], point[1]] = state;
+        }
         public bool IsValid(int[] position) => board_state[position[0], position[1]] == Token.None;
+        public Board[,] GetChildren(Token token)
+        {
+            Board[,] ret = new Board[size, size];
+            for (int x = 0; x < size; x++)
+            {
+                for (int y = 0; y < size; y++)
+                {
+                    if (IsValid(new int[] { x, y }))
+                    {
+                        ret[x, y] = new Board(size, board_state);
+                        ret[x, y].Move(new int[] { x, y }, token);
+                    }
+                    else ret[x, y] = null;
+                }
+            }
+            return ret;
+        }
         public int CheckWin()
         {
             int ret = 3;
             int buffer;
             for (int i = 0; i < Math.Pow(size, 2); i++)
             {
-                if (board_state[i % size, (int)Math.Floor((double)i / size)] == Token.None) ret = 0;
+                if (board_state[Helper.GetPoint(i)[0], Helper.GetPoint(i)[1]] == Token.None) ret = 0;
             }
             for (int x = 0; x < size; x++)
             {

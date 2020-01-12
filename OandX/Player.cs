@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OandX
+﻿namespace OandX
 {
-    class Player
+    abstract class Player
     {
-        protected int size;
-        protected Token token;
+        public Token token { get; }
+        public int size { get; }
         public Player(int size, Token token)
         {
-            this.size = size;
             this.token = token;
+            this.size = size;
         }
-        public Token Get_Token() => token;
+        public abstract int[] Move(Board board);
     }
 }

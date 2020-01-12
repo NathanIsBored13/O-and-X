@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OandX
+﻿namespace OandX
 {
     class Human : Player
     {
@@ -12,10 +6,11 @@ namespace OandX
         {
 
         }
-        public int[] Move(Board board)
+        public override int[] Move(Board board)
         {
-
-            throw new NotImplementedException();
+            int[] ret = new int[2] { -1, -1 };
+            if (board.IsValid(Helper.last_button)) ret = Helper.last_button;
+            return ret;
         }
     }
 }
