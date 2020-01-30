@@ -11,11 +11,6 @@ namespace OandX
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public struct PObject
-    {
-        public object obj;
-        public int type;
-    }
     public enum Token
     {
         None,
@@ -30,7 +25,7 @@ namespace OandX
         private readonly string[] flags = new string[3] { "", "O", "X" };
         private Button[,] buttons;
         private Board board;
-        private PObject[] players;
+        private Player[] players;
         private bool turn;
         private int turn_counter = 0;
         public MainWindow()
@@ -51,52 +46,19 @@ namespace OandX
                 buttons[Helper.GetPoint(i)[0], Helper.GetPoint(i)[1]].Click += Button_Click;
                 Game_Board.Children.Add(buttons[Helper.GetPoint(i)[0], Helper.GetPoint(i)[1]]);
             }
-            players = new PObject[2];
-            players[0] = new PObject
-            {
-                obj = new Human(board_size, Token.Naught),
-                type = 0
-            };
-            /*players[1] = new PObject
-            {
-                obj = new Human(board_size, Token.Cross),
-                is_human = true
-            };*/
-            /*players[0] = new PObject
-            {
-                obj = new AI(board_size, Token.Naught),
-                is_human = false
-            };*/
-            players[1] = new PObject
-            {
-                obj = new MinMax_AI(board_size, Token.Cross),
-                type = 1
-            };
+            players = new Player[2];
+            players[0] = new MinMax_AI(board_size, Token.Naught);
+            players[1] = new MinMax_AI(board_size, Token.Cross);
             Reset();
         }
         private void Turn()
         {
-            PObject player = players[turn ? 0 : 1];
-            if(player.type == 0)
+            Console.WriteLine(turn);
+            int[] buffer = players[turn ? 0 : 1].Move(board);
+            if (buffer[0] != -1 && buffer[1] != -1)
             {
-                Human human = (Human)player.obj;
-                int[] buffer = human.Move(board);
-                if (buffer[0] >= 0 && buffer[1] >= 0)
-                {
-                    turn = !turn;
-                    board.Move(buffer, human.token);
-                    Draw();
-                    CheckWin();
-                }
-            }
-            else
-            {
+                board.Move(buffer, players[turn ? 0 : 1].token);
                 turn = !turn;
-                if (player.type == 1)
-                {
-                    MinMax_AI ai = (MinMax_AI)player.obj;
-                    board.Move(ai.Move(board), ai.token);
-                }
                 Draw();
                 CheckWin();
             }
